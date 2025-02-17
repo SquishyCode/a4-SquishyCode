@@ -40,38 +40,38 @@ const Register = () => {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen bg-gray-100">
+        <div className="container">
 
-            <div className="w-full max-w-md bg-white p-6 rounded-xl shadow-lg">
-                <h2 className="text-2xl font-semibold text-center text-gray-700">Create an Account</h2>
+            <div className="box">
+                <h2 className="title">Create an Account</h2>
 
-                {error && <p className='text-red-500 text-center'>{error}</p>}
+                {error && <p className='error'>{error}</p>}
                 {success && <p className='text-green-500 text-center'>{success}</p>}
 
                 <form onSubmit = {handleRegister}>
                     <div className="mb-4">
-                        <label className="block text-gray-600 text-sm font-semibold mb-2">Username</label>
+                        <label className="label">Username</label>
                         <input type="text" value={username}
-                               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                               className="input"
                                onChange={(e) => setUsername(e.target.value)}
                                required/>
                     </div>
 
                     <div className="mb-4">
-                        <label className="block text-gray-600 text-sm font-semibold mb-2">Password</label>
+                        <label className="label">Password</label>
                         <input type="password" value={password}
-                               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                               className="input"
                                onChange={(e) => setPassword(e.target.value)}
                                required/>
                     </div>
 
                     <button type="submit"
-                            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+                            className="button button-blue">
                         Register
                     </button>
                 </form>
 
-                <p className="text-sm text-center text-gray-500 mt-4">
+                <p className="footer">
                     Already have an account? <a href="/login" className="text-blue-500 hover:underline">Login here</a>
                 </p>
             </div>

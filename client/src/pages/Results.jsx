@@ -97,9 +97,9 @@ const Results = () => {
     if (!user) return <p>Loading...</p>;
 
     return (
-        <div className="container mx-auto mt-10">
-            <div className="results-header">
-                <h1 className="text-2xl font-bold">Welcome, {user.username}</h1>
+        <div className="container">
+            <div className="box">
+                <h1 className="title">Welcome, {user.username}</h1>
             </div>
 
             {/* Data Entries Table */}

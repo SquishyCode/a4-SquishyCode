@@ -38,42 +38,48 @@ const Login = () => {
     }
 
     return (
-        <div className="flex items-center justify-center h-screen bg-gray-100">
-            <div className="w-full max-w-md bg-white p-6 rounded-xl shadow-lg">
-                <h2 className="text-2xl font-semibold text-center text-gray-700">Login</h2>
+        <div className="container">
+            <div className="box">
+                <h2 className="title">Login</h2>
 
                 <form onSubmit={handleLogin}>
-                    <div className="mb-4">
-                        <label className="block text-gray-600 text-sm font-semibold mb-2">Username</label>
-                        <input type="text" value={username}
-                               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                               onChange={(e) => setUsername(e.target.value)}
-                               required/>
+                    <div className="mb-6">
+                        <label className="label">Username</label>
+                        <input
+                            type="text"
+                            value={username}
+                            className="input"
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                        />
                     </div>
 
-                    <div className="mb-4">
-                        <label className="block text-gray-600 text-sm font-semibold mb-2">Password</label>
-                        <input type="password" value={password}
-                               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                               onChange={(e) => setPassword(e.target.value)}
-                               required/>
+                    <div className="mb-6">
+                        <label className="label">Password</label>
+                        <input
+                            type="password"
+                            value={password}
+                            className="input"
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
                     </div>
 
-                    <button type="submit"
-                            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+                    <button type="submit" className="button button-blue">
                         Login
                     </button>
                 </form>
 
-                {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                {error && <p className="error">{error}</p>}
 
-                <div className='text-center mt-4'>
-                    <button onClick={handleGitHubLogin} className="w-full bg-gray-800 text-white py-2 rounded-lg hover:bg-gray-900 transition duration-300">
-                        Login with GitHub</button>
+                <div className="text-center mt-6">
+                    <button onClick={handleGitHubLogin} className="button button-gray">
+                        Login with GitHub
+                    </button>
                 </div>
 
-                <p className="text-sm text-center text-gray-500 mt-4">
-                    Don't have an account? <a href="/register" className="text-blue-500 hover:underline">Sign up</a>
+                <p className="footer">
+                    Don't have an account? <a href="/register" className="link">Sign up</a>
                 </p>
             </div>
         </div>
