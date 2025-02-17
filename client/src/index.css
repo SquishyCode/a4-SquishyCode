@@ -1,0 +1,107 @@
+/* index.css */
+
+body {
+  color: #3d405b;
+}
+
+/* Container for the whole page */
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f4f1de;
+}
+
+/* Box for content */
+.box {
+  width: 100%;
+  max-width: 28rem;
+  background-color: #f4f1de;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+/* Title style */
+.title {
+  font-size: 3rem;
+  font-weight: 600;
+  text-align: center;
+  color: #3d405b; /* Tailwind text-gray-700 */
+  margin-bottom: 1.5rem;
+}
+
+/* Label and input styling */
+.label {
+  display: block;
+  color: #4a5568; /* Tailwind text-gray-600 */
+  font-size: 0.875rem; /* Tailwind text-sm */
+  font-weight: 600; /* Tailwind font-semibold */
+  margin-bottom: 0.5rem; /* Tailwind mb-2 */
+}
+
+.input {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  outline: none;
+  box-sizing: border-box;
+  margin-bottom: 0.3rem;
+}
+
+/* Focused input */
+.input:focus {
+  border-color: #63b3ed; /* Tailwind focus:ring-2 focus:ring-blue-400 */
+  box-shadow: 0 0 0 2px rgba(99, 184, 237, 0.5);
+}
+
+/* Button styles */
+.button {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s;
+  margin-top: 0.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.button-blue {
+  background-color: #3182ce;
+  color: white;
+}
+
+.button-blue:hover {
+  background-color: #2b6cb0; /* Tailwind hover:bg-blue-600 */
+}
+
+.button-gray {
+  background-color: #2d3748; /* Tailwind bg-gray-800 */
+  color: white;
+}
+
+.button-gray:hover {
+  background-color: #1a202c; /* Tailwind hover:bg-gray-900 */
+}
+
+/* Error message */
+.error {
+  color: #f56565;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.link {
+  color: #3182ce;
+  text-decoration: underline;
+}
+
+.footer {
+  font-size: 0.875rem;
+  text-align: center;
+  color: #a0aec0;
+  margin-top: 1rem;
+}
