@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     host: "https://a4-squishy-code-api.vercel.app/",
     cors: true,
-    historyApiFallback: true,  // Add this line
+    historyApiFallback: true,
   }
 });
 
