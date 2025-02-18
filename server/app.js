@@ -22,7 +22,7 @@ passport.use(new LocalStrategy(async (username, password, done) => {
 passport.use(new GithubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/github/callback"
+    callbackURL: "https://a4-squishycode.onrender.com/auth/github/callback"
 }, async (accessToken, refreshToken, profile, done) => {
     let user = await usersCollection.findOne({ githubId: profile.id });
     if (!user) {

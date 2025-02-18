@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: "https://a4-squishycode.onrender.com",
+    host: "https://a4-squishycode.onrender.com",
     cors: true,
     historyApiFallback: true,
     allowedHosts: true
