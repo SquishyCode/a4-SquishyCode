@@ -2,7 +2,7 @@ import React from 'react';
 
 function Home() {
     const handleGitHubLogin = () => {
-        window.location.href = "http://localhost:3000/auth/github";
+        window.location.href = "https://a4-squishycode.onrender.com/auth/github";
     }
 
     return (

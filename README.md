@@ -2,6 +2,12 @@
 Assignment 4
 ===
 
-Hosting link: https://a4-squishy-code.vercel.app/register
+Hosting link: https://a4-squishycode.onrender.com
 
 Added the React framework, along with Passport Github authentication while using express to handle all of this. Currently, the Register and Login pages got a visual overhaul using React components and css.
+
+Some created accounts (remember to remove whitespaces):
+
+ username : password
+1.john_doe : 123456
+2.wilson_wong : wongisawesome

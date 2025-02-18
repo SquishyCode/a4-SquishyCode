@@ -11,7 +11,7 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:3000/login", { username, password }, { withCredentials: true });
+            const response = await axios.post("https://a4-squishycode.onrender.com/login", { username, password }, { withCredentials: true });
             if (response.status === 200) {
                 navigate("/results");
             }
@@ -20,7 +20,7 @@ const Login = () => {
         }
     };
 
-    const handleGitHubLogin = () => { window.location.href = "http://localhost:3000/auth/github"; };
+    const handleGitHubLogin = () => { window.location.href = "https://a4-squishycode.onrender.com/auth/github"; };
 
     return (
         <div className="container">

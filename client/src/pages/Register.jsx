@@ -12,7 +12,7 @@ const Register = () => {
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:3000/register", { username, password });
+            const response = await axios.post("https://a4-squishycode.onrender.com/register", { username, password });
             if (response.status === 201) {
                 setSuccess("Registration successful!");
                 setError(null);
