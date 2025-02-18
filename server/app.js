@@ -43,7 +43,6 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: "https://a4-squishycode-front.onrender.com",
     credentials: true,
 }));
 
