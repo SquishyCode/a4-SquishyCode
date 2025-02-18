@@ -67,10 +67,10 @@ const dataCollection = db.collection("data");
 const authRoutes = require("./routes/authRoutes");
 app.use("/", authRoutes(usersCollection, dataCollection));
 
-app.use(express.static(path.join(__dirname, 'client', 'dist')));
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'));
-});
+// app.use(express.static(path.join(__dirname, 'client', 'dist')));
+// app.get('*', (req, res) => {
+//     res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'));
+// });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, "0.0.0.0", () => { console.log(`Server is running on: http://localhost:${PORT}`); });
