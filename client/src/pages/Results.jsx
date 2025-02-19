@@ -39,11 +39,18 @@ const Results = () => {
 
     const addNewEntry = async () => {
         try {
-            const newEntry = { title: "", description: "", timestamp: new Date().toISOString() };
-            const response = await axios.post("https://a4-squishycode.onrender.com/add", newEntry,
-                { withCredentials: true });
+            const newEntry = {
+                title: "New Title",
+                description: "New Description",
+                timestamp: new Date().toISOString()
+            };
 
-            console.log("New Entry Response:", response.data);
+            // Send request to backend
+            const response = await axios.post("https://a4-squishycode.onrender.com/add", newEntry, {
+                withCredentials: true
+            });
+
+            console.log("Add Entry Response:", response.data);
 
             if (!response.data || !response.data.newEntry) {
                 console.error("Invalid response from backend:", response.data);
@@ -51,12 +58,15 @@ const Results = () => {
             }
 
             setUserData(prevData => [...prevData, response.data.newEntry]);
+
             setEditingId(response.data.newEntry._id);
             setEditData(response.data.newEntry);
+
         } catch (error) {
-            console.error("Error adding entry:", error);
+            console.error("Error adding entry:", error.response ? error.response.data : error);
         }
     };
+
 
 
     const handleDelete = async (id) => {
