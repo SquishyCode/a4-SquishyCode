@@ -16,7 +16,8 @@ const Results = () => {
                 setUser(response.data.user);
                 setUserData(response.data.userData);
 
-                console.log()
+                console.log(response.data.user);
+                console.log(response.data.userData);
             } catch (error) {
                 if (error.response && error.response.status === 401) navigate("/login");
                 console.error("Failed to fetch results", error);
