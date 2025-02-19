@@ -137,6 +137,22 @@ module.exports = (usersCollection, dataCollection) => {
         }
     });
 
+    router.post("/logout", (req, res) => {
+        req.logout((err) => {
+            if (err) {
+                return res.status(500).json({ message: "Logout failed" });
+            }
+            req.session.destroy((err) => {
+                if (err) {
+                    return res.status(500).json({ message: "Could not clear session" });
+                }
+                res.clearCookie("connect.sid", { path: "/", httpOnly: true, sameSite: "none", secure: true });
+                return res.json({ message: "Logged out successfully" });
+            });
+        });
+    });
+
+
 
     return router;
 };

@@ -12,8 +12,7 @@ const Results = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios("https://a4-squishycode.onrender.com/results",
-                    {withCredentials: true});
+                const response = await axios("https://a4-squishycode.onrender.com/results", {withCredentials: true});
 
                 console.log("Session Check Response:", response.data);
 
@@ -29,24 +28,36 @@ const Results = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.post("https://a4-squishycode.onrender.com/logout", {},
-                {withCredentials: true});
-            navigate("/login");
-        } catch (error) { console.error("Logout failed", error); }
+            await axios.post("https://a4-squishycode.onrender.com/logout", {}, { withCredentials: true });
+            console.log("Logout successful"); // Debugging log
+            navigate("/login"); // Redirect after logout
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
     };
+
 
     const addNewEntry = async () => {
         try {
             const newEntry = { title: "", description: "", timestamp: new Date().toISOString() };
             const response = await axios.post("https://a4-squishycode.onrender.com/add", newEntry,
-                {withCredentials: true});
-            setUserData(prevData => [...prevData, { ...newEntry, _id: response.data.newEntry._id }]);
+                { withCredentials: true });
+
+            console.log("New Entry Response:", response.data);
+
+            if (!response.data || !response.data.newEntry) {
+                console.error("Invalid response from backend:", response.data);
+                return;
+            }
+
+            setUserData(prevData => [...prevData, response.data.newEntry]);
             setEditingId(response.data.newEntry._id);
-            setEditData(newEntry);
+            setEditData(response.data.newEntry);
         } catch (error) {
             console.error("Error adding entry:", error);
         }
     };
+
 
     const handleDelete = async (id) => {
         try {

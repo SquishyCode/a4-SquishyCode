@@ -62,14 +62,14 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-        mongoUrl: process.env["MONGO_URI"],  // Connects to your MongoDB database
+        mongoUrl: process.env["MONGO_URI"],
         collectionName: "sessions",
-        ttl: 24 * 60 * 60 // 1 day session expiration (adjust as needed)
+        ttl: 24 * 60 * 60
     }),
     cookie: {
-        secure: true,  // Required for HTTPS
+        secure: true,
         httpOnly: true,
-        sameSite: "none"  // Required for cross-origin sessions
+        sameSite: "none"
     }
 }));
 
