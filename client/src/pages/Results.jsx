@@ -38,7 +38,7 @@ const Results = () => {
     const addNewEntry = async () => {
         try {
             const newEntry = { title: "", description: "", timestamp: new Date().toISOString() };
-            const response = await axios.post("https://a4-squishycode.onrender.com/add", newEntry, ,
+            const response = await axios.post("https://a4-squishycode.onrender.com/add", newEntry,
                 {withCredentials: true});
             setUserData(prevData => [...prevData, { ...newEntry, _id: response.data.newEntry._id }]);
             setEditingId(response.data.newEntry._id);
@@ -50,7 +50,7 @@ const Results = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.post(`https://a4-squishycode.onrender.com/delete/${id}`, {}, ,
+            await axios.post(`https://a4-squishycode.onrender.com/delete/${id}`, {},
                 {withCredentials: true});
             setUserData(prevData => prevData.filter(item => item._id !== id));
         } catch (error) {
