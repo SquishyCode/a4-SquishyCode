@@ -12,6 +12,7 @@ module.exports = (usersCollection, dataCollection) => {
             if (!user) return res.status(400).json({ message: info?.message || "Invalid credentials" });
             req.logIn(user, (err) => {
                 if (err) return next(err);
+                console.log('Login Successful', user._id, user.username);
                 res.status(200).json({ message: "Login successful", user: { _id: user._id, username: user.username } });
             });
         })(req, res, next);
