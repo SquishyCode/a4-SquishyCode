@@ -71,7 +71,6 @@ module.exports = (usersCollection, dataCollection) => {
     router.get('/auth/github/callback', passport.authenticate("github", { failureRedirect: "/login" }), (req, res) => {
         console.log("User authenticated with GitHub:", req.user);
 
-        // 🔥 Save session before redirecting
         req.session.save((err) => {
             if (err) {
                 console.error("Error saving session:", err);
