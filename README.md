@@ -2,7 +2,7 @@
 Assignment 4
 ===
 
-Hosting link: https://a4-squishycode.onrender.com
+Hosting link: https://a4-squishycode-front.onrender.com
 
 Added the React framework, along with Passport Github authentication while using express to handle all of this. Currently, the Register and Login pages got a visual overhaul using React components and css.
 
