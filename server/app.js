@@ -11,6 +11,7 @@ const GithubStrategy = require("passport-github").Strategy;
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const path = require('path');
+const MongoStore = require("connect-mongo");
 
 passport.use(new LocalStrategy(async (username, password, done) => {
     const user = await usersCollection.findOne({ username });
@@ -50,16 +51,22 @@ app.use(cors({
 }));
 
 app.use(express.urlencoded({ extended: false }));
+
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URI,
+        collectionName: "sessions"
+    }),
     cookie: {
         secure: true,
         httpOnly: true,
         sameSite: "none"
     }
 }));
+
 
 app.use(passport.initialize());
 app.use(passport.session());
