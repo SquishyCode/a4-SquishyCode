@@ -11,13 +11,18 @@ module.exports = (usersCollection, dataCollection) => {
         passport.authenticate("local", (err, user, info) => {
             if (err) return next(err);
             if (!user) return res.status(400).json({ message: info?.message || "Invalid credentials" });
+
             req.logIn(user, (err) => {
                 if (err) return next(err);
-                console.log('Login Successful', user._id, user.username);
-                res.status(200).json({ message: "Login successful", user: { _id: user._id, username: user.username } });
+
+                req.session.save((err) => {
+                    if (err) return next(err);
+                    res.status(200).json({ message: "Login successful", user: { _id: user._id, username: user.username } });
+                });
             });
         })(req, res, next);
     });
+
 
     // Logout route
     router.post("/logout", (req, res) => {
@@ -84,11 +89,19 @@ module.exports = (usersCollection, dataCollection) => {
 
     // GitHub Auth
     router.get('/auth/github', passport.authenticate("github", { scope: ["user:email"] }));
-    router.get('/auth/github/callback', passport.authenticate("github", { failureRedirect: "/register" }), (req, res) => {
-        hardCodeUser = res;
-        console.log(hardCodeUser);
-        res.redirect("https://a4-squishycode-front.onrender.com/results");
+    router.get('/auth/github/callback', passport.authenticate("github", { failureRedirect: "/login" }), (req, res) => {
+        console.log("User authenticated with GitHub:", req.user);
+
+        // 🔥 Save session before redirecting
+        req.session.save((err) => {
+            if (err) {
+                console.error("Error saving session:", err);
+                return res.status(500).send("Session error");
+            }
+            res.redirect("https://a4-squishycode-front.onrender.com/results");
+        });
     });
+
 
     // Route to add
     router.post("/add", async (req, res) => {
