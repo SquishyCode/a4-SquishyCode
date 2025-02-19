@@ -60,7 +60,7 @@ module.exports = (usersCollection, dataCollection) => {
             const user = await usersCollection.findOne({"_id": new ObjectId('67b1845aa7cd608cf9898a84') });
 
             console.log(user);
-            console.log(user.id);
+            console.log(user._id);
             console.log(user.username);
             console.log(req.params._id);
             console.log(user.params._id);
