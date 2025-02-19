@@ -51,20 +51,7 @@ module.exports = (usersCollection, dataCollection) => {
             console.log("Is Authenticated?:", req.isAuthenticated());
             console.log("Session Data:", req.session);
             console.log("User Data:", req.user);
-
-            console.log("Checking authentication for results...");
-            process.stdout.write("Checking authentication for results...\n");
-
-            console.log("Is Authenticated?:", req.isAuthenticated());
-            process.stdout.write(`Is Authenticated?: ${req.isAuthenticated()}\n`);
-
-            console.log("Session Data:", req.session);
-            process.stdout.write(`Session Data: ${JSON.stringify(req.session)}\n`);
-
-            console.log("User Data:", req.user);
-            process.stdout.write(`User Data: ${JSON.stringify(req.user)}\n`);
-
-            process.stdout.write(`Hardcore User: ${JSON.stringify(hardCodeUser)}`);
+            console.log(req.body);
 
             // if (!req.isAuthenticated() || !req.user) {
             //     return res.status(401).json({ message: "Unauthorized - User not logged in" });
@@ -73,7 +60,8 @@ module.exports = (usersCollection, dataCollection) => {
             console.log("Fetching data for user:", req.user._id);
 
             const userData = await dataCollection.find({ userId: req.user._id.toString() }).toArray();
-            const user = await usersCollection.findOne({ _id: new ObjectId(req.user._id) });
+            //const user = await usersCollection.findOne({ _id: new ObjectId(req.user._id) });
+            const user = await usersCollection.findOne({_id: new ObjectId('67b1845aa7cd608cf9898a84') });
 
             // if (!user) {
             //     return res.status(404).json({ message: "User not found" });
