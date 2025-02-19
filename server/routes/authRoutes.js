@@ -47,23 +47,29 @@ module.exports = (usersCollection, dataCollection) => {
     });
 
     // Results route
-    router.get("/results", async (req, res) => {
-        try {
-            if (!req.isAuthenticated() || !req.user) {
-                return res.status(401).json({ message: "Unauthorized - User not logged in" });
-            }
-            const user = await usersCollection.findOne({ _id: new ObjectId(req.user._id) });
-            if (!user) return res.status(404).json({ message: "User not found" });
+    router.get("/results", (req, res) => {
+        console.log("Checking authentication for results...");
+        console.log("Is Authenticated?:", req.isAuthenticated());
+        console.log("Session Data:", req.session);
+        console.log("User Data:", req.user);
 
-            const userData = await dataCollection.find({ userId: req.user._id.toString() }).toArray();
-
-            res.json({ userData, user: { _id: user._id, username: user.username } });
-
-        } catch (error) {
-            console.error("Error fetching results:", error);
-            res.status(500).json({ message: "Internal Server Error" });
+        if (!req.isAuthenticated() || !req.user) {
+            return res.status(401).json({ message: "Unauthorized - User not logged in" });
         }
+
+        usersCollection.findOne({ _id: new ObjectId(req.user._id) })
+            .then(user => {
+                if (!user) return res.status(404).json({ message: "User not found" });
+
+                dataCollection.find({ userId: req.user._id.toString() }).toArray()
+                    .then(userData => {
+                        res.json({ userData, user: { _id: user._id, username: user.username } });
+                    })
+                    .catch(err => res.status(500).json({ message: "Error fetching data" }));
+            })
+            .catch(err => res.status(500).json({ message: "Error fetching user" }));
     });
+
 
 
     // GitHub Auth
