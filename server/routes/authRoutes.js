@@ -66,6 +66,8 @@ module.exports = (usersCollection, dataCollection) => {
             console.log(user.params._id);
 
             const userData = await dataCollection.find({ userId: req.params._id.toString() }).toArray();
+
+            console.log(user.id);
             //const user = await usersCollection.findOne({ _id: new ObjectId(req.user._id) });
 
             // if (!user) {
