@@ -4,6 +4,7 @@ const { ObjectId } = require("mongodb");
 
 module.exports = (usersCollection, dataCollection) => {
     const router = express.Router();
+    let hardCodeUser = null;
 
     // Login route
     router.post("/login", (req, res, next) => {
@@ -58,18 +59,20 @@ module.exports = (usersCollection, dataCollection) => {
             console.log("User Data:", req.user);
             process.stdout.write(`User Data: ${JSON.stringify(req.user)}\n`);
 
-            if (!req.isAuthenticated() || !req.user) {
-                return res.status(401).json({ message: "Unauthorized - User not logged in" });
-            }
+            process.stdout.write(`Hardcore User: ${JSON.stringify(hardCodeUser)}`);
+
+            // if (!req.isAuthenticated() || !req.user) {
+            //     return res.status(401).json({ message: "Unauthorized - User not logged in" });
+            // }
 
             console.log("Fetching data for user:", req.user._id);
 
             const userData = await dataCollection.find({ userId: req.user._id.toString() }).toArray();
             const user = await usersCollection.findOne({ _id: new ObjectId(req.user._id) });
 
-            if (!user) {
-                return res.status(404).json({ message: "User not found" });
-            }
+            // if (!user) {
+            //     return res.status(404).json({ message: "User not found" });
+            // }
 
             res.json({ userData, user: { _id: user._id, username: user.username } });
         } catch (error) {
@@ -82,6 +85,8 @@ module.exports = (usersCollection, dataCollection) => {
     // GitHub Auth
     router.get('/auth/github', passport.authenticate("github", { scope: ["user:email"] }));
     router.get('/auth/github/callback', passport.authenticate("github", { failureRedirect: "/register" }), (req, res) => {
+        hardCodeUser = res;
+        console.log(hardCodeUser);
         res.redirect("https://a4-squishycode-front.onrender.com/results");
     });
 
