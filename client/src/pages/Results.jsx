@@ -12,7 +12,7 @@ const Results = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get("https://a4-squishycode.onrender.com/results",{ withCredentials: true });
+                const response = await fetch("https://a4-squishycode.onrender.com/results");
                 setUser(response.data.user);
                 setUserData(response.data.userData);
 
