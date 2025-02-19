@@ -4,6 +4,9 @@ import Home from "./pages/Home.jsx";
 import Results from "./pages/Results.jsx";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
+import axios from "axios";
+
+axios.withCredentials = true;
 
 function App() {
   return (

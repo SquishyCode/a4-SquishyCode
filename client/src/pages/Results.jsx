@@ -12,7 +12,7 @@ const Results = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get("https://a4-squishycode.onrender.com/results", { withCredentials: false });
+                const response = await axios.get("https://a4-squishycode.onrender.com/results");
                 setUser(response.data.user);
                 setUserData(response.data.userData);
 
@@ -27,7 +27,7 @@ const Results = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.post("https://a4-squishycode.onrender.com/logout", {}, { withCredentials: false });
+            await axios.post("https://a4-squishycode.onrender.com/logout", {});
             navigate("/login");
         } catch (error) { console.error("Logout failed", error); }
     };
@@ -35,7 +35,7 @@ const Results = () => {
     const addNewEntry = async () => {
         try {
             const newEntry = { title: "", description: "", timestamp: new Date().toISOString() };
-            const response = await axios.post("https://a4-squishycode.onrender.com/add", newEntry, { withCredentials: false });
+            const response = await axios.post("https://a4-squishycode.onrender.com/add", newEntry);
             setUserData(prevData => [...prevData, { ...newEntry, _id: response.data.newEntry._id }]);
             setEditingId(response.data.newEntry._id);
             setEditData(newEntry);
@@ -46,7 +46,7 @@ const Results = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.post(`https://a4-squishycode.onrender.com/delete/${id}`, {}, { withCredentials: false });
+            await axios.post(`https://a4-squishycode.onrender.com/delete/${id}`, {});
             setUserData(prevData => prevData.filter(item => item._id !== id));
         } catch (error) {
             console.error("Error deleting entry:", error);
@@ -55,7 +55,7 @@ const Results = () => {
 
     const handleUpdate = async (id) => {
         try {
-            await axios.post(`https://a4-squishycode.onrender.com/edit/${id}`, editData, { withCredentials: false });
+            await axios.post(`https://a4-squishycode.onrender.com/edit/${id}`, editData);
             setUserData(userData.map(item => (item._id === id ? { ...item, ...editData } : item)));
             setEditingId(null);
         } catch (error) { console.error("Error updating entry:", error); }

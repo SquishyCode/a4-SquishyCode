@@ -11,7 +11,7 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("https://a4-squishycode.onrender.com/login", { username, password }, { withCredentials: false });
+            const response = await axios.post("https://a4-squishycode.onrender.com/login", { username, password });
             if (response.status === 200) {
                 navigate("/results");
             }
