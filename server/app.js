@@ -21,8 +21,8 @@ passport.use(new LocalStrategy(async (username, password, done) => {
 }));
 
 passport.use(new GithubStrategy({
-    clientID: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    clientID: process.env["GITHUB_CLIENT_ID "],
+    clientSecret: process.env["GITHUB_CLIENT_SECRET "],
     callbackURL: "https://a4-squishycode.onrender.com/auth/github/callback"
 }, async (accessToken, refreshToken, profile, done) => {
     let user = await usersCollection.findOne({ githubId: profile.id });
@@ -53,11 +53,11 @@ app.use(cors({
 app.use(express.urlencoded({ extended: false }));
 
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env["SESSION_SECRET "],
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-        mongoUrl: process.env.MONGO_URI,
+        mongoUrl: process.env["MONGO_URI"],
         collectionName: "sessions"
     }),
     cookie: {
