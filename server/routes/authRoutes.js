@@ -37,21 +37,34 @@ module.exports = (usersCollection, dataCollection) => {
     });
 
     // Results route
-    router.get("/results", (req, res) => {
-        console.log(req);
-        console.log(req.isAuthenticated());
-        //if (!req.isAuthenticated()) return res.status(401).json({ message: "Unauthorized" });
-        dataCollection.find({ userId: req.user._id.toString() }).toArray()
-            .then(userData => {
-                usersCollection.findOne({ _id: req.user._id })
-                    .then(user => {
-                        if (!user) return res.status(404).json({ message: "User not found" });
-                        res.status(200).json({ userData, user: { _id: user._id, username: user.username } });
-                    })
-                    .catch(err => res.status(500).json({ message: "Error fetching user" }));
-            })
-            .catch(err => res.status(500).json({ message: "Error fetching data" }));
+    router.get("/results", async (req, res) => {
+        try {
+            // Debugging logs
+            console.log("Checking authentication for results...");
+            console.log("Is Authenticated?:", req.isAuthenticated());
+            console.log("Session Data:", req.session);
+            console.log("User Data:", req.user);
+
+            if (!req.isAuthenticated() || !req.user) {
+                return res.status(401).json({ message: "Unauthorized - User not logged in" });
+            }
+
+            console.log("Fetching data for user:", req.user._id);
+
+            const userData = await dataCollection.find({ userId: req.user._id.toString() }).toArray();
+            const user = await usersCollection.findOne({ _id: new ObjectId(req.user._id) });
+
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
+            }
+
+            res.json({ userData, user: { _id: user._id, username: user.username } });
+        } catch (error) {
+            console.error("Error fetching results:", error);
+            res.status(500).json({ message: "Internal Server Error" });
+        }
     });
+
 
     // GitHub Auth
     router.get('/auth/github', passport.authenticate("github", { scope: ["user:email"] }));
