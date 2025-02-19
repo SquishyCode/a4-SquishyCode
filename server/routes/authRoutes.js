@@ -43,10 +43,10 @@ module.exports = (usersCollection, dataCollection) => {
         //if (!req.isAuthenticated()) return res.status(401).json({ message: "Unauthorized" });
         dataCollection.find({ userId: req.user._id.toString() }).toArray()
             .then(userData => {
-                usersCollection.findOne({ _id: new ObjectId(req.user._id) })
+                usersCollection.findOne({ _id: req.user._id })
                     .then(user => {
                         if (!user) return res.status(404).json({ message: "User not found" });
-                        res.json({ userData, user: { _id: user._id, username: user.username } });
+                        res.status(200).json({ userData, user: { _id: user._id, username: user.username } });
                     })
                     .catch(err => res.status(500).json({ message: "Error fetching user" }));
             })
