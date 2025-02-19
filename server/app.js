@@ -83,6 +83,12 @@ const dataCollection = db.collection("data");
 const authRoutes = require("./routes/authRoutes");
 app.use("/", authRoutes(usersCollection, dataCollection));
 
+app.get("/check-session", (req, res) => {
+    console.log("Session Data:", req.session);
+    console.log("User Data:", req.user);
+    res.json({ session: req.session, user: req.user });
+});
+
 // app.use(express.static(path.join(__dirname, 'client', 'dist')));
 // app.get('*', (req, res) => {
 //     res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'));
