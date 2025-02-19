@@ -25,11 +25,14 @@ module.exports = (usersCollection, dataCollection) => {
 
 
     // Logout route
-    router.post("/logout", (req, res) => {
-        req.logout(() => {
-            req.session.destroy();
-            res.clearCookie("connect.sid");
-            res.status(200).json({ message: "Logged out successfully" });
+    router.post("/logout", (req, res, next) => {
+        req.logout((err) => {
+            if (err) return next(err);
+            req.session.destroy((err) => {
+                if (err) return next(err);
+                res.clearCookie("connect.sid", { path: "/", domain: "a4-squishycode-front.onrender.com", secure: true, sameSite: "none" });
+                res.status(200).json({ message: "Logged out successfully" });
+            });
         });
     });
 
@@ -46,35 +49,16 @@ module.exports = (usersCollection, dataCollection) => {
     // Results route
     router.get("/results", async (req, res) => {
         try {
-            // Debugging logs
-            // console.log("Checking authentication for results...");
-            // console.log("Is Authenticated?:", req.isAuthenticated());
-            // console.log("Session Data:", req.session);
-            // console.log("User Data:", req.user);
-            // console.log(req.body);
+            if (!req.isAuthenticated() || !req.user) {
+                return res.status(401).json({ message: "Unauthorized - User not logged in" });
+            }
+            const user = await usersCollection.findOne({ _id: new ObjectId(req.user._id) });
+            if (!user) return res.status(404).json({ message: "User not found" });
 
-            // if (!req.isAuthenticated() || !req.user) {
-            //     return res.status(401).json({ message: "Unauthorized - User not logged in" });
-            // }
-
-            const user = await usersCollection.findOne({"_id": new ObjectId('67b1845aa7cd608cf9898a84') });
-
-            console.log(user);
-            console.log(user._id);
-            console.log(user.username);
-            console.log(req.params._id);
-            console.log(user.params._id);
-
-            const userData = await dataCollection.find({ userId: req.params._id.toString() }).toArray();
-
-            console.log(user.id);
-            //const user = await usersCollection.findOne({ _id: new ObjectId(req.user._id) });
-
-            // if (!user) {
-            //     return res.status(404).json({ message: "User not found" });
-            // }
+            const userData = await dataCollection.find({ userId: req.user._id.toString() }).toArray();
 
             res.json({ userData, user: { _id: user._id, username: user.username } });
+
         } catch (error) {
             console.error("Error fetching results:", error);
             res.status(500).json({ message: "Internal Server Error" });

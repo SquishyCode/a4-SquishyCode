@@ -48,10 +48,8 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: "*",
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"]
+    origin: "https://a4-squishycode-front.onrender.com",
+    credentials: true
 }));
 
 app.use(express.urlencoded({ extended: false }));
