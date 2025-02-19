@@ -61,8 +61,8 @@ app.use(session({
         collectionName: "sessions"
     }),
     cookie: {
-        secure: true,
-        httpOnly: true,
+        secure: false,
+        httpOnly: false,
         sameSite: "none"
     }
 }));
@@ -70,6 +70,8 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.set("trust proxy", 1);
 
 const client = new MongoClient(process.env["MONGO_URI"]);
 (async () => { try { await client.connect(); console.log("Connected to MongoDB Successfully!"); } catch (error) { console.error("MongoDB Connection Error:", error); process.exit(1); } })();
