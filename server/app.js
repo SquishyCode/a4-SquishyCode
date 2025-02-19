@@ -37,20 +37,16 @@ passport.use(new GithubStrategy({
 }));
 
 passport.serializeUser((user, done) => {
-    console.log("Serializing user:", user);
-    done(null, user._id.toString());
+    console.log("Serializing user:", user);  // Debugging log
+    done(null, { id: user._id, username: user.username });
+});
+passport.deserializeUser(async (userObj, done) => {
+    console.log("Deserializing user:", userObj);  // Debugging log
+    const user = await usersCollection.findOne({ _id: new ObjectId(userObj.id) });
+    console.log("User found in deserialize:", user);
+    done(null, user);
 });
 
-passport.deserializeUser(async (id, done) => {
-    try {
-        console.log("Deserializing user with ID:", id);
-        const user = await usersCollection.findOne({ _id: new ObjectId(id) });
-        console.log("User found in deserialize:", user);
-        done(null, user);
-    } catch (error) {
-        done(error);
-    }
-});
 
 
 const app = express();
@@ -66,15 +62,17 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-        mongoUrl: process.env["MONGO_URI"],
-        collectionName: "sessions"
+        mongoUrl: process.env["MONGO_URI"],  // Connects to your MongoDB database
+        collectionName: "sessions",
+        ttl: 24 * 60 * 60 // 1 day session expiration (adjust as needed)
     }),
     cookie: {
-        secure: false,
-        httpOnly: false,
-        sameSite: "none"
+        secure: true,  // Required for HTTPS
+        httpOnly: true,
+        sameSite: "none"  // Required for cross-origin sessions
     }
 }));
+
 
 
 app.use(passport.initialize());
