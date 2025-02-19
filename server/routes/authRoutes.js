@@ -46,6 +46,18 @@ module.exports = (usersCollection, dataCollection) => {
             console.log("Session Data:", req.session);
             console.log("User Data:", req.user);
 
+            console.log("Checking authentication for results...");
+            process.stdout.write("Checking authentication for results...\n");
+
+            console.log("Is Authenticated?:", req.isAuthenticated());
+            process.stdout.write(`Is Authenticated?: ${req.isAuthenticated()}\n`);
+
+            console.log("Session Data:", req.session);
+            process.stdout.write(`Session Data: ${JSON.stringify(req.session)}\n`);
+
+            console.log("User Data:", req.user);
+            process.stdout.write(`User Data: ${JSON.stringify(req.user)}\n`);
+
             if (!req.isAuthenticated() || !req.user) {
                 return res.status(401).json({ message: "Unauthorized - User not logged in" });
             }
