@@ -20,9 +20,13 @@ passport.use(new LocalStrategy(async (username, password, done) => {
     return done(null, user);
 }));
 
+console.log("GITHUB CLIENT with parenthesis", process.env["GITHUB_CLIENT_ID"]);
+console.log("GITHUB CLIENT without parenthesis", process.env.GITHUB_CLIENT_ID);
+
+
 passport.use(new GithubStrategy({
-    clientID: process.env["GITHUB_CLIENT_ID "],
-    clientSecret: process.env["GITHUB_CLIENT_SECRET "],
+    clientID: process.env["GITHUB_CLIENT_ID"],
+    clientSecret: process.env["GITHUB_CLIENT_SECRET"],
     callbackURL: "https://a4-squishycode.onrender.com/auth/github/callback"
 }, async (accessToken, refreshToken, profile, done) => {
     let user = await usersCollection.findOne({ githubId: profile.id });
