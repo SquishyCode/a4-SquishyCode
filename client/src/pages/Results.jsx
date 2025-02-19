@@ -10,37 +10,22 @@ const Results = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const response = await axios("https://a4-squishycode.onrender.com/results",
-    //                 {withCredentials: true});
-    //
-    //             console.log("she be loggin");
-    //             console.log("Console Data", response.data);
-    //             console.log(response);
-    //             console.log(response.data.user);
-    //             console.log(response.data.userData);
-    //
-    //             setUser(response.data.user);
-    //             setUserData(response.data.userData);
-    //         } catch (error) {
-    //             if (error.response && error.response.status === 401) navigate("/login");
-    //             console.error("Failed to fetch results", error);
-    //         }
-    //     };
-    //     fetchData();
-    // }, [navigate]);
-        const checkSession = async () => {
+        const fetchData = async () => {
             try {
-                const response = await axios.get("https://a4-squishycode.onrender.com/check-session", { withCredentials: true });
+                const response = await axios("https://a4-squishycode.onrender.com/results",
+                    {withCredentials: true});
+
                 console.log("Session Check Response:", response.data);
+
+                setUser(response.data.user);
+                setUserData(response.data.userData);
             } catch (error) {
-                console.error("Error fetching session:", error);
+                if (error.response && error.response.status === 401) navigate("/login");
+                console.error("Failed to fetch results", error);
             }
         };
-
-        checkSession();
-    }, []);
+        fetchData();
+    }, [navigate]);
 
     const handleLogout = async () => {
         try {
