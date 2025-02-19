@@ -5,7 +5,7 @@ import App from './App.jsx';
 import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = false;
 
 createRoot(document.getElementById('root')).render(
     <BrowserRouter>
