@@ -47,21 +47,24 @@ module.exports = (usersCollection, dataCollection) => {
     router.get("/results", async (req, res) => {
         try {
             // Debugging logs
-            console.log("Checking authentication for results...");
-            console.log("Is Authenticated?:", req.isAuthenticated());
-            console.log("Session Data:", req.session);
-            console.log("User Data:", req.user);
-            console.log(req.body);
+            // console.log("Checking authentication for results...");
+            // console.log("Is Authenticated?:", req.isAuthenticated());
+            // console.log("Session Data:", req.session);
+            // console.log("User Data:", req.user);
+            // console.log(req.body);
 
             // if (!req.isAuthenticated() || !req.user) {
             //     return res.status(401).json({ message: "Unauthorized - User not logged in" });
             // }
 
-            console.log("Fetching data for user:", req.user._id);
+            const user = await usersCollection.findOne({"_id": new ObjectId('67b1845aa7cd608cf9898a84') });
 
-            const userData = await dataCollection.find({ userId: req.user._id.toString() }).toArray();
+            console.log(user);
+            console.log(user.id);
+            console.log(user.username);
+
+            const userData = await dataCollection.find({ userId: req.params.id.toString() }).toArray();
             //const user = await usersCollection.findOne({ _id: new ObjectId(req.user._id) });
-            const user = await usersCollection.findOne({_id: new ObjectId('67b1845aa7cd608cf9898a84') });
 
             // if (!user) {
             //     return res.status(404).json({ message: "User not found" });
