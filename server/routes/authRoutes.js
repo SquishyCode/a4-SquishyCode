@@ -38,6 +38,8 @@ module.exports = (usersCollection, dataCollection) => {
 
     // Results route
     router.get("/results", (req, res) => {
+        console.log(req);
+        console.log(req.isAuthenticated());
         //if (!req.isAuthenticated()) return res.status(401).json({ message: "Unauthorized" });
         dataCollection.find({ userId: req.user._id.toString() }).toArray()
             .then(userData => {

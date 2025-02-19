@@ -15,6 +15,8 @@ const Results = () => {
                 const response = await axios.get("https://a4-squishycode.onrender.com/results", { withCredentials: false });
                 setUser(response.data.user);
                 setUserData(response.data.userData);
+
+                console.log()
             } catch (error) {
                 if (error.response && error.response.status === 401) navigate("/login");
                 console.error("Failed to fetch results", error);
