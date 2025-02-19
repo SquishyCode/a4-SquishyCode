@@ -12,7 +12,7 @@ const Results = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("https://a4-squishycode.onrender.com/results");
+                const response = await axios("https://a4-squishycode.onrender.com/results", {withCredentials: true});
 
                 console.log("she be loggin");
                 console.log(response);
