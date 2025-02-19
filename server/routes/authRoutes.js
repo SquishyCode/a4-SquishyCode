@@ -134,6 +134,13 @@ module.exports = (usersCollection, dataCollection) => {
         }
     });
 
+    router.get("/check-session", (req, res) => {
+        console.log("Session Data:", req.session);
+        console.log("User Data:", req.user);
+        res.json({ session: req.session, user: req.user });
+    });
+
+
 
     return router;
 };
