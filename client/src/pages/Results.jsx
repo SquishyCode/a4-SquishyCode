@@ -13,11 +13,14 @@ const Results = () => {
         const fetchData = async () => {
             try {
                 const response = await fetch("https://a4-squishycode.onrender.com/results");
-                setUser(response.data.user);
-                setUserData(response.data.userData);
 
+                console.log("she be loggin");
+                console.log(response);
                 console.log(response.data.user);
                 console.log(response.data.userData);
+
+                setUser(response.data.user);
+                setUserData(response.data.userData);
             } catch (error) {
                 if (error.response && error.response.status === 401) navigate("/login");
                 console.error("Failed to fetch results", error);
