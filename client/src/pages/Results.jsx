@@ -62,6 +62,8 @@ const Results = () => {
             setEditingId(response.data.newEntry._id);
             setEditData(response.data.newEntry);
 
+            location.reload();
+
         } catch (error) {
             console.error("Error adding entry:", error.response ? error.response.data : error);
         }
