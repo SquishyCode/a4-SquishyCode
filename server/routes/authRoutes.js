@@ -68,7 +68,7 @@ module.exports = (usersCollection, dataCollection) => {
 
     // GitHub Auth
     router.get('/auth/github', passport.authenticate("github", { scope: ["user:email"] }));
-    router.get('/auth/github/callback', passport.authenticate("github", { failureRedirect: "/login" }), (req, res) => {
+    router.get('/auth/github/callback', passport.authenticate("github", { failureRedirect: "/register" }), (req, res) => {
         res.redirect("https://a4-squishycode-front.onrender.com/results");
     });
 
