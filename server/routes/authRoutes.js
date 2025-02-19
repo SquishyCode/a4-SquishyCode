@@ -25,16 +25,19 @@ module.exports = (usersCollection, dataCollection) => {
 
 
     // Logout route
-    router.post("/logout", (req, res, next) => {
-        req.logout((err) => {
+    router.post("/login", (req, res, next) => {
+        passport.authenticate("local", (err, user, info) => {
             if (err) return next(err);
-            req.session.destroy((err) => {
+            if (!user) return res.status(400).json({ message: info?.message || "Invalid credentials" });
+
+            req.logIn(user, (err) => {
                 if (err) return next(err);
-                res.clearCookie("connect.sid", { path: "/", domain: "a4-squishycode-front.onrender.com", secure: true, sameSite: "none" });
-                res.status(200).json({ message: "Logged out successfully" });
+                console.log("User logged in:", req.user);
+                res.status(200).json({ message: "Login successful", user: { _id: user._id, username: user.username } });
             });
-        });
+        })(req, res, next);
     });
+
 
     // Register route
     router.post("/register", async (req, res) => {

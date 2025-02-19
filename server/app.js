@@ -37,12 +37,21 @@ passport.use(new GithubStrategy({
 }));
 
 passport.serializeUser((user, done) => {
-    done(null, user._id);
+    console.log("Serializing user:", user);
+    done(null, user._id.toString());
 });
+
 passport.deserializeUser(async (id, done) => {
-    const user = await usersCollection.findOne({ _id: new ObjectId(id) });
-    done(null, user);
+    try {
+        console.log("Deserializing user with ID:", id);
+        const user = await usersCollection.findOne({ _id: new ObjectId(id) });
+        console.log("User found in deserialize:", user);
+        done(null, user);
+    } catch (error) {
+        done(error);
+    }
 });
+
 
 const app = express();
 app.use(express.json());
@@ -79,6 +88,7 @@ const client = new MongoClient(process.env["MONGO_URI"]);
 const db = client.db("A3-HomeworkDB");
 const usersCollection = db.collection("users");
 const dataCollection = db.collection("data");
+const sessionCollection = db.collection("sessions");
 
 const authRoutes = require("./routes/authRoutes");
 app.use("/", authRoutes(usersCollection, dataCollection));
@@ -86,6 +96,7 @@ app.use("/", authRoutes(usersCollection, dataCollection));
 app.get("/check-session", (req, res) => {
     console.log("Session Data:", req.session);
     console.log("User Data:", req.user);
+    console.log("Sessions", sessionCollection.find());
     res.json({ session: req.session, user: req.user });
 });
 
