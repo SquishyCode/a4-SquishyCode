@@ -62,15 +62,17 @@ module.exports = (usersCollection, dataCollection) => {
             console.log(user);
             console.log(user.id);
             console.log(user.username);
+            console.log(req.params._id);
+            console.log(user.params._id);
 
-            const userData = await dataCollection.find({ userId: req.params.id.toString() }).toArray();
+            const userData = await dataCollection.find({ userId: req.params._id.toString() }).toArray();
             //const user = await usersCollection.findOne({ _id: new ObjectId(req.user._id) });
 
             // if (!user) {
             //     return res.status(404).json({ message: "User not found" });
             // }
 
-            res.json({ userData, user: { _id: user._id, username: user.username } });
+            res.status(200).json({ userData, user: { _id: user._id, username: user.username } });
         } catch (error) {
             console.error("Error fetching results:", error);
             res.status(500).json({ message: "Internal Server Error" });
