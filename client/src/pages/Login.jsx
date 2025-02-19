@@ -15,6 +15,7 @@ const Login = () => {
             if (response.status === 200) {
                 navigate("/results");
             }
+            window.location.href = "/results";
         } catch (err) {
             setError(err.response?.data?.message || "Login Failed");
         }
